@@ -260,7 +260,7 @@ int32_t DynNavMeshScene::init(const char* buffer, int32_t n)
 
 
 
-int32_t DynNavMeshScene::addObstacle(dtObstacleRef* obstacleId, const float* pos, const float radius, const float height)
+int32_t DynNavMeshScene::addObstacle(dtObstacleRef* obstacleId, const float* pos, const float radius, const float height, uint32_t& outStatus)
 {
 	if (!tileCache)
 	{
@@ -268,6 +268,7 @@ int32_t DynNavMeshScene::addObstacle(dtObstacleRef* obstacleId, const float* pos
 	}
 	dtObstacleRef result;
 	dtStatus status = tileCache->addObstacle(pos, radius, height, &result);
+	outStatus = static_cast<uint32_t>(status);
 	if (!dtStatusSucceed(status))
 	{
 		return -2;
@@ -276,7 +277,7 @@ int32_t DynNavMeshScene::addObstacle(dtObstacleRef* obstacleId, const float* pos
 	return 0;
 }
 
-int32_t DynNavMeshScene::addBoxObstacle(dtObstacleRef* obstacleId, const float* bmin, const float* bmax)
+int32_t DynNavMeshScene::addBoxObstacle(dtObstacleRef* obstacleId, const float* bmin, const float* bmax, uint32_t& outStatus)
 {
 	if (!tileCache)
 	{
@@ -284,6 +285,7 @@ int32_t DynNavMeshScene::addBoxObstacle(dtObstacleRef* obstacleId, const float* 
 	}
 	dtObstacleRef result;
 	dtStatus status = tileCache->addBoxObstacle(bmin, bmax, &result);
+	outStatus = static_cast<uint32_t>(status);
 	if (!dtStatusSucceed(status))
 	{
 		return -2;
@@ -292,7 +294,7 @@ int32_t DynNavMeshScene::addBoxObstacle(dtObstacleRef* obstacleId, const float* 
 	return 0;
 }
 
-int32_t DynNavMeshScene::addBoxObstacle(dtObstacleRef* obstacleId, const float* center, const float* halfExtents, const float yRadians)
+int32_t DynNavMeshScene::addBoxObstacle(dtObstacleRef* obstacleId, const float* center, const float* halfExtents, const float yRadians, uint32_t& outStatus)
 {
 	if (!tileCache)
 	{
@@ -300,6 +302,7 @@ int32_t DynNavMeshScene::addBoxObstacle(dtObstacleRef* obstacleId, const float* 
 	}
 	dtObstacleRef result;
 	dtStatus status = tileCache->addBoxObstacle(center, halfExtents, yRadians, &result);
+	outStatus = static_cast<uint32_t>(status);
 	if (!dtStatusSucceed(status))
 	{
 		return -2;
@@ -308,13 +311,14 @@ int32_t DynNavMeshScene::addBoxObstacle(dtObstacleRef* obstacleId, const float* 
 	return 0;
 }
 
-int32_t DynNavMeshScene::removeObstacle(const dtObstacleRef ref)
+int32_t DynNavMeshScene::removeObstacle(const dtObstacleRef ref, uint32_t& outStatus)
 {
 	if (!tileCache)
 	{
 		return -1;
 	}
 	dtStatus status = tileCache->removeObstacle(ref);
+	outStatus = static_cast<uint32_t>(status);
 	if (!dtStatusSucceed(status))
 	{
 		return -2;

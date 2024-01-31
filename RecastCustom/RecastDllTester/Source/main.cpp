@@ -97,33 +97,34 @@ void testSoleNavMesh()
 	test_RecastFindNearestPoint(recast);
 }
 
-void test_RecastAddBoxCenterObstacle(NavMeshScene* navMeshScene)
+int test_RecastAddBoxCenterObstacle(NavMeshScene* navMeshScene)
 {
 	float targetPos[3];
-	targetPos[0] = -0.26572;
-	targetPos[1] = -0.74188;
-	targetPos[2] = -3.63819;
+	targetPos[0] = 43.54539;
+	targetPos[1] = -8.27;
+	targetPos[2] = 30.45;
 
 	float extents[3];
-	extents[0] = 1;
-	extents[1] = 1;
-	extents[2] = 0.5;
+	extents[0] = 0.1;
+	extents[1] = 0.1;
+	extents[2] = 0.1;
 
 	uint32_t obstacleId;
-	int result = RecastAddBoxCenterObstacle(navMeshScene, &obstacleId, targetPos, extents, 0);
+	uint32_t outStatus;
+	int result = RecastAddBoxCenterObstacle(navMeshScene, &obstacleId, targetPos, extents, 0, outStatus);
 	if (result != 0) {
 		printf("RecastAddBoxCenterObstacle failed:%d\n", result);
-		return;
+		return result;
 	}
 
 	result = RecastUpdateObstacles(navMeshScene, false);
 	if (result != 0) {
 		printf("UpdateObstacles failed:%d\n", result);
-		return;
+		return result;
 	}
 
 	printf("RecastAddBoxCenterObstacle result:%d\n", obstacleId);
-
+	return 0;
 }
 
 void testTileCache()
@@ -131,7 +132,7 @@ void testTileCache()
 	printf("start testTileCache\n");
 
 	std::vector<char> buffer;
-	std::string path = R"(../../Bin/all_tiles_tilecache.bin)";
+	std::string path = R"(../../Bin/LevelDemo2_1.navmesh.bytes)";
 	auto result = readFileToBuffer(path.c_str(), buffer);
 	if (result != 0) {
 		return;
@@ -146,18 +147,35 @@ void testTileCache()
 		return;
 	}
 
-	test_PrintBounds(recast);
+	/*test_PrintBounds(recast);
 
 	test_RecastFindRandomPoint(recast);
 
-	test_RecastFindNearestPoint(recast);
+	test_RecastFindNearestPoint(recast);*/
+	float extends[3];
+	extends[0] = 0.5;
+	extends[1] = 4;
+	extends[2] = 0.5;
+	float startPos[3];
+	startPos[0] = -0.05460959;
+	startPos[1] = -5.77;
+	startPos[2] = 31.10515;
+	float endPos[3];
+	endPos[0] = 3.478402;
+	endPos[1] = -9.77;
+	endPos[2] = 25.12626;
+	float realEndPos[3];
+	realEndPos[0] = 0;
+	realEndPos[1] = 0;
+	realEndPos[2] = 0;
+	int32_t result1 = RecastTryMove(recast, extends, startPos, endPos, realEndPos);
 
-	test_RecastAddBoxCenterObstacle(recast);
+	printf("result %d, realEndPos %f,%f,%f.", result1, realEndPos[0], realEndPos[1], realEndPos[2]);
 }
 
 int main(int /*argc*/, char** /*argv*/) {
 
-	testSoleNavMesh();
+	//testSoleNavMesh();
 
 	testTileCache();
 

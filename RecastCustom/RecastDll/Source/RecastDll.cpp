@@ -292,7 +292,7 @@ void RecastUpdate(NavMeshScene* navMeshScene, float deltaTime)
 	navMeshScene->update(deltaTime);
 }
 
-int32_t RecastAddObstacle(NavMeshScene* navMeshScene, uint32_t* obstacleId, const float* pos, const float radius, const float height)
+int32_t RecastAddObstacle(NavMeshScene* navMeshScene, uint32_t* obstacleId, const float* pos, const float radius, const float height, uint32_t& outStatus)
 {
 	if (navMeshScene == nullptr)
 	{
@@ -303,10 +303,10 @@ int32_t RecastAddObstacle(NavMeshScene* navMeshScene, uint32_t* obstacleId, cons
 		return -4;
 	}
 
-	return navMeshScene->addObstacle(obstacleId, pos, radius, height);
+	return navMeshScene->addObstacle(obstacleId, pos, radius, height, outStatus);
 }
 
-int32_t RecastAddBoxObstacle(NavMeshScene* navMeshScene, uint32_t* obstacleId, const float* bmin, const float* bmax)
+int32_t RecastAddBoxObstacle(NavMeshScene* navMeshScene, uint32_t* obstacleId, const float* bmin, const float* bmax, uint32_t& outStatus)
 {
 	if (navMeshScene == nullptr)
 	{
@@ -321,10 +321,10 @@ int32_t RecastAddBoxObstacle(NavMeshScene* navMeshScene, uint32_t* obstacleId, c
 		return -5;
 	}
 
-	return navMeshScene->addBoxObstacle(obstacleId, bmin, bmax);
+	return navMeshScene->addBoxObstacle(obstacleId, bmin, bmax, outStatus);
 }
 
-int32_t RecastAddBoxCenterObstacle(NavMeshScene* navMeshScene, uint32_t* obstacleId, const float* center, const float* halfExtents, const float yRadians)
+int32_t RecastAddBoxCenterObstacle(NavMeshScene* navMeshScene, uint32_t* obstacleId, const float* center, const float* halfExtents, const float yRadians, uint32_t& outStatus)
 {
 	if (navMeshScene == nullptr)
 	{
@@ -339,17 +339,17 @@ int32_t RecastAddBoxCenterObstacle(NavMeshScene* navMeshScene, uint32_t* obstacl
 		return -5;
 	}
 
-	return navMeshScene->addBoxObstacle(obstacleId, center, halfExtents, yRadians);
+	return navMeshScene->addBoxObstacle(obstacleId, center, halfExtents, yRadians, outStatus);
 }
 
-int32_t RecastRemoveObstacle(NavMeshScene* navMeshScene, const uint32_t obstacleId)
+int32_t RecastRemoveObstacle(NavMeshScene* navMeshScene, const uint32_t obstacleId, uint32_t& outStatus)
 {
 	if (navMeshScene == nullptr)
 	{
 		return -3;
 	}
 
-	return navMeshScene->removeObstacle(obstacleId);
+	return navMeshScene->removeObstacle(obstacleId, outStatus);
 }
 
 int32_t RecastUpdateObstacles(NavMeshScene* navMeshScene, bool isEveryFrame)

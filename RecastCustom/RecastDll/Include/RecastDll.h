@@ -34,10 +34,10 @@ extern "C" {
 	EXPORT_API int32_t RecastSetAgentMoveTarget(NavMeshScene* navMeshScene, int32_t agentId, const float* pos, bool adjust);
 	EXPORT_API int32_t RecastSetAgentSpeed(NavMeshScene* navMeshScene, int32_t agentId, float maxSpeed, float maxAcceleration);
 	EXPORT_API void RecastUpdate(NavMeshScene* navMeshScene, float deltaTime);
-	EXPORT_API int32_t RecastAddObstacle(NavMeshScene* navMeshScene, uint32_t* obstacleId, const float* pos, const float radius, const float height);
-	EXPORT_API int32_t RecastAddBoxObstacle(NavMeshScene* navMeshScene, uint32_t* obstacleId, const float* bmin, const float* bmax);
-	EXPORT_API int32_t RecastAddBoxCenterObstacle(NavMeshScene* navMeshScene, uint32_t* obstacleId, const float* center, const float* halfExtents, const float yRadians);
-	EXPORT_API int32_t RecastRemoveObstacle(NavMeshScene* navMeshScene, const uint32_t obstacleId);
+	EXPORT_API int32_t RecastAddObstacle(NavMeshScene* navMeshScene, uint32_t* obstacleId, const float* pos, const float radius, const float height, uint32_t& outStatus);
+	EXPORT_API int32_t RecastAddBoxObstacle(NavMeshScene* navMeshScene, uint32_t* obstacleId, const float* bmin, const float* bmax, uint32_t& outStatus);
+	EXPORT_API int32_t RecastAddBoxCenterObstacle(NavMeshScene* navMeshScene, uint32_t* obstacleId, const float* center, const float* halfExtents, const float yRadians, uint32_t& outStatus);
+	EXPORT_API int32_t RecastRemoveObstacle(NavMeshScene* navMeshScene, const uint32_t obstacleId, uint32_t& outStatus);
 	EXPORT_API int32_t RecastUpdateObstacles(NavMeshScene* navMeshScene, bool isEveryFrame);
 #ifdef __cplusplus
 }

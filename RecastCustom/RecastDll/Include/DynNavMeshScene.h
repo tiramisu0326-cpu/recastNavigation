@@ -30,10 +30,10 @@ public:
 	class dtTileCache* tileCache;
 
 	int32_t init(const char* buffer, int32_t n) override;
-	int32_t addObstacle(dtObstacleRef* obstacleId, const float* pos, const float radius, const float height) override;
-	int32_t addBoxObstacle(dtObstacleRef* obstacleId, const float* bmin, const float* bmax) override;
-	int32_t addBoxObstacle(dtObstacleRef* obstacleId, const float* center, const float* halfExtents, const float yRadians) override;
-	int32_t removeObstacle(const dtObstacleRef ref) override;
+	int32_t addObstacle(dtObstacleRef* obstacleId, const float* pos, const float radius, const float height, uint32_t& outStatus) override;
+	int32_t addBoxObstacle(dtObstacleRef* obstacleId, const float* bmin, const float* bmax, uint32_t& outStatus) override;
+	int32_t addBoxObstacle(dtObstacleRef* obstacleId, const float* center, const float* halfExtents, const float yRadians, uint32_t& outStatus) override;
+	int32_t removeObstacle(const dtObstacleRef ref, uint32_t& outStatus) override;
 	int32_t updateObstacles(bool isEveryFrame) override;
 private:
 	struct LinearAllocator* mTalloc;

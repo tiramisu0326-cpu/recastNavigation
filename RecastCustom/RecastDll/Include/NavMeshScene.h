@@ -75,10 +75,10 @@ public:
 
 	void update(float deltaTime);
 
-	inline virtual int32_t addObstacle(dtObstacleRef* /*obstacleId*/, const float* /*pos*/, const float /*radius*/, const float /*height*/) { return -100; }
-	inline virtual int32_t addBoxObstacle(dtObstacleRef* /*obstacleId*/, const float* /*bmin*/, const float* /*bmax*/) { return -100; };
-	inline virtual int32_t addBoxObstacle(dtObstacleRef* /*obstacleId*/, const float* /*center*/, const float* /*halfExtents*/, const float /*yRadians*/) { return -100; };
-	inline virtual int32_t removeObstacle(const dtObstacleRef /*ref*/) { return -100; };
+	inline virtual int32_t addObstacle(dtObstacleRef* /*obstacleId*/, const float* /*pos*/, const float /*radius*/, const float /*height*/, uint32_t& outStatus) { return -100; }
+	inline virtual int32_t addBoxObstacle(dtObstacleRef* /*obstacleId*/, const float* /*bmin*/, const float* /*bmax*/, uint32_t& outStatus) { return -100; };
+	inline virtual int32_t addBoxObstacle(dtObstacleRef* /*obstacleId*/, const float* /*center*/, const float* /*halfExtents*/, const float /*yRadians*/, uint32_t& outStatus) { return -100; };
+	inline virtual int32_t removeObstacle(const dtObstacleRef /*ref*/, uint32_t& outStatus) { return -100; };
 	inline virtual int32_t updateObstacles(bool /*isEveryFrame*/) { return -100; }
 
 	virtual int32_t GenNavMeshInfo(const char* exportJsonPath);
