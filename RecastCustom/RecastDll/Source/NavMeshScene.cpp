@@ -344,8 +344,7 @@ int32_t NavMeshScene::tryMove(float* extents, float* startPos, float* endPos, fl
 	// If we couldn't find a path, return failure
 	if (nvisited == 0)
 	{
-		//return -102;
-		return 0;
+		return -102;
 	}
 
 	// Height Fix Solution 1: The effect is not good, there will be a high degree of ghost animals
