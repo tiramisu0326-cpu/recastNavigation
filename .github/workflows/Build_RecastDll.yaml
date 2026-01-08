@@ -24,7 +24,7 @@ jobs:
         working-directory: RecastCustom/NavMeshExport
         run: ./make_osx.sh 
       - name: UploadNavMeshExport
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/NavMeshExport/Plugins/**/*
           name: plugin_NavMeshExport
@@ -38,7 +38,7 @@ jobs:
         working-directory: RecastCustom/NavMeshExport
         run: ./make_linux64.sh
       - name: UploadNavMeshExport
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/NavMeshExport/Plugins/**/*
           name: plugin_NavMeshExport
@@ -52,7 +52,7 @@ jobs:
         working-directory: RecastCustom/NavMeshExport
         run: ./make_linux32.sh
       - name: UploadNavMeshExport
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/NavMeshExport/Plugins/**/*
           name: plugin_NavMeshExport
@@ -80,7 +80,7 @@ jobs:
           .\make_win32.bat
           .\make_win64.bat
       - name: UploadNavMeshExport
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/NavMeshExport/Plugins/**/*
           name: plugin_NavMeshExport
@@ -99,7 +99,7 @@ jobs:
         working-directory: RecastCustom/RecastDll
         run: ./make_android.sh
       - name: UploadRecastDll
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/RecastDll/Plugins/**/*
           name: plugin_recastdll
@@ -112,7 +112,7 @@ jobs:
         working-directory: RecastCustom/RecastDll
         run: ./make_ios.sh
       - name: UploadRecastDll
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/RecastDll/Plugins/**/*
           name: plugin_recastdll
@@ -125,7 +125,7 @@ jobs:
         working-directory: RecastCustom/RecastDll
         run: ./make_osx.sh
       - name: UploadRecastDll
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/RecastDll/Plugins/**/*
           name: plugin_recastdll
@@ -141,7 +141,7 @@ jobs:
           ./make_linux32.sh
           ./make_linux64.sh
       - name: UploadRecastDll
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/RecastDll/Plugins/**/*
           name: plugin_recastdll   
@@ -161,7 +161,7 @@ jobs:
           .\make_win64.bat
           .\make_uwp.bat
       - name: UploadRecastDll
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/RecastDll/Plugins/**/*
           name: plugin_recastdll   
@@ -170,13 +170,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: [windows,osx,linux,ios,android,windows_navmesh,osx_navmesh,linux_navmesh,linux_navmesh32]
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: plugin_recastdll
           path: plugin_recastdll/
           
       - name: UploadRecastDll
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: plugin_NavMeshExport
           path: plugin_NavMeshExport/
