@@ -27,7 +27,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/NavMeshExport/Plugins/**/*
-          name: plugin_NavMeshExport
+          name: plugin_NavMeshExport_osx
+
   linux_navmesh:
     runs-on: ubuntu-latest
     steps:
@@ -41,7 +42,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/NavMeshExport/Plugins/**/*
-          name: plugin_NavMeshExport
+          name: plugin_NavMeshExport_linux
+
   linux_navmesh32:
     runs-on: ubuntu-latest
     steps:
@@ -55,16 +57,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/NavMeshExport/Plugins/**/*
-          name: plugin_NavMeshExport
+          name: plugin_NavMeshExport_linux32
+
   windows_navmesh:
     runs-on: windows-latest
-
     steps:
       - uses: actions/checkout@v3
-      
       - name: Insatll MSVC
         uses: microsoft/setup-msbuild@v1.1
-
       - name: Download and Install SDL
         working-directory: RecastDemo/Contrib
         shell: pwsh
@@ -73,7 +73,6 @@ jobs:
           tar -xf SDL.zip
           ren SDL2-2.24.2 SDL
           del SDL.zip
-      
       - name: Build
         run: |
           cd RecastCustom/NavMeshExport
@@ -83,7 +82,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/NavMeshExport/Plugins/**/*
-          name: plugin_NavMeshExport
+          name: plugin_NavMeshExport_windows
+
   android:
     runs-on: ubuntu-latest
     steps:
@@ -102,10 +102,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/RecastDll/Plugins/**/*
-          name: plugin_recastdll
+          name: plugin_recastdll_android
+
   ios:
     runs-on: macos-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Build
@@ -115,10 +115,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/RecastDll/Plugins/**/*
-          name: plugin_recastdll
+          name: plugin_recastdll_ios
+
   osx:
     runs-on: macos-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Build
@@ -128,7 +128,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/RecastDll/Plugins/**/*
-          name: plugin_recastdll
+          name: plugin_recastdll_osx
+
   linux:
     runs-on: ubuntu-latest
     steps:
@@ -144,16 +145,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/RecastDll/Plugins/**/*
-          name: plugin_recastdll   
+          name: plugin_recastdll_linux
+
   windows:
     runs-on: windows-latest
-
     steps:
       - uses: actions/checkout@v3
-      
       - name: Insatll MSVC
         uses: microsoft/setup-msbuild@v1.1
-      
       - name: Build
         run: |
           cd RecastCustom/RecastDll
@@ -164,27 +163,20 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: ./RecastCustom/RecastDll/Plugins/**/*
-          name: plugin_recastdll   
+          name: plugin_recastdll_windows
 
   publish:
     runs-on: ubuntu-latest
-    needs: [windows,osx,linux,ios,android,windows_navmesh,osx_navmesh,linux_navmesh,linux_navmesh32]
+    needs: [windows, osx, linux, ios, android, windows_navmesh, osx_navmesh, linux_navmesh, linux_navmesh32]
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: plugin_recastdll
-          path: plugin_recastdll/
-          
-      - name: UploadRecastDll
-        uses: actions/download-artifact@v4
-        with:
-          name: plugin_NavMeshExport
-          path: plugin_NavMeshExport/
-          
+          path: artifacts/
+
       - name: Create Release Asset
         run: |
-          tar cvfz recastdll_${{ github.event.inputs.tag_name }}.tgz plugin_recastdll
-          tar cvfz navmeshexport_${{ github.event.inputs.tag_name }}.tgz plugin_NavMeshExport
+          tar cvfz recastdll_${{ github.event.inputs.tag_name }}.tgz artifacts/plugin_recastdll_*
+          tar cvfz navmeshexport_${{ github.event.inputs.tag_name }}.tgz artifacts/plugin_NavMeshExport_*
 
       - name: Release
         uses: softprops/action-gh-release@v1
