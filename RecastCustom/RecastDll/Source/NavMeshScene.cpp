@@ -376,6 +376,17 @@ int32_t NavMeshScene::tryMove(float* extents, float* startPos, float* endPos, fl
 	navQuery->findNearestPoly(realEndPos, extents, &navFilter, &nearestPoly, m_tmpPos);
 	if (nearestPoly)
 	{
+		//if succeed, get the polygon id of endPos as out parameter to let the caller kown
+		//the caller should compare endPolygon and realEndPolygon to check if move really succeed
+		//afterall, tryMove is only responsible for the validity of the move result, not accessibility,
+		//even if endPos is unreachable, tryMove still runs.
+		dtPolyRef endPosNearestPoly;
+		navQuery->findNearestPoly(endPos, extents, &navFilter, &endPosNearestPoly, 0);
+		if (endPosNearestPoly != nearestPoly)
+		{
+			return 103;
+		}
+		//height fix
 		realEndPos[0] = m_tmpPos[0];
 		realEndPos[1] = m_tmpPos[1];
 		realEndPos[2] = m_tmpPos[2];
@@ -384,10 +395,12 @@ int32_t NavMeshScene::tryMove(float* extents, float* startPos, float* endPos, fl
 		if (dtStatusSucceed(status)) {
 			realEndPos[1] = h;
 		}
+		return 0;
 	}
-
-	// Otherwise, return success
-	return 0;
+	else
+	{
+		return 104;
+	}
 }
 
 int32_t NavMeshScene::addAgent(float* pos, float radius, float height, float maxSpeed, float maxAcceleration)
