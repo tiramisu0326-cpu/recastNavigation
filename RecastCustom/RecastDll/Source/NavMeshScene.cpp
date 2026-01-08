@@ -384,7 +384,7 @@ int32_t NavMeshScene::tryMove(float* extents, float* startPos, float* endPos, fl
 		navQuery->findNearestPoly(endPos, extents, &navFilter, &endPosNearestPoly, 0);
 		if (endPosNearestPoly != nearestPoly)
 		{
-			return 103;
+			return -103;
 		}
 		//height fix
 		realEndPos[0] = m_tmpPos[0];
@@ -399,7 +399,7 @@ int32_t NavMeshScene::tryMove(float* extents, float* startPos, float* endPos, fl
 	}
 	else
 	{
-		return 104;
+		return -104;
 	}
 }
 
